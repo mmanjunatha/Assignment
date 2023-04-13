@@ -24,13 +24,12 @@ Follow below steps to run test cases:
 > Note: If you don't have python in local and want to execute with Docker, Kindly follow below steps
 
 - clone or get the task.py(from root folder), test.py, orders.csv and Dockerfile into your server and place all the files in same directory.
-- Kindly place the orders.cvs file in the server with proper deatils.
-- run below command generate docker image.
+- run below command to generate docker image.
 ```
 dcoker build -t testrevenueimage -f Dockerfile .
 ```
 Above step will create image.
-- Run below command to get the out put.
+- Run below command to run test cases.
 ```
 docker run --rm --name testrevenuetask testrevenueimage
 ```
