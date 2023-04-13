@@ -20,7 +20,54 @@ dataset.
 
 ## Solution Instruction:
 
-#Follow below steps to get the expected output:
+Follow below steps to get the expected output:
+> Note: Assuming already python and pip available in the server
+- Install pandas package using pip command:
+   ```
+   pip install pandas
+   ```
+- clone or get the task.py into your server.
+- Kindly place the orders.cvs file in the server with proper deatils.
+- run below command get the expected out.
+   ```
+   python task.py -f <path and file name of the csv file>
+   ```
+   ```
+   Ex: python task.py -f orders.csv
+   ```
+- Expected output:
+   ```
+    D:\task>python task.py -f orders.csv
+    revenue_by_each_month:  {'jan': 4750, 'mar': 1000}
+    revenue_by_each_product:  {'prod_name1': 2000, 'prod_name2': 1500, 'prod_name3': 2250}
+    revenue_by_each_customer:  {'cus_1': 4250, 'cus_2': 500, 'cus_3': 1000}
+    Top 10 customers:
+    4250  :  cus_1
+    1000  :  cus_3
+    500  :  cus_2
+    500  :  cus4
+    400  :  cus5
+    300  :  cus6
+    250  :  cus7
+    200  :  cus8
+    150  :  cus9
+    100  :  cus10
+   ```
+   
+> Note: If you don't have python in local and want to execute with Docker, Kindly follow below steps
 
-- Prerequiste:
+- clone or get the task.py and Dockerfile into your server.
+- Kindly place the orders.cvs file in the server with proper deatils.
+- run below command generate docker image.
+```
+dcoker build --build-arg file=orders.csv -t revenueimage -f Dockerfile .
+```
+Here --build-arg is to accept the input file name. to copy inside docker image.
+Above step will create image.
+- Run below command to get the out put.
+```
+docker run --rm --name revenuetask revenueimage
+```
+This will print the expected output
 
+> Note: CSV file we are assuming order_date in dd-mm-yyyy format
