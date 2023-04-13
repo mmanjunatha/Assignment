@@ -12,8 +12,14 @@ def revenue_by_each_month(data):
         month_dataframe = data
         month_dataframe['month'] = pandas.to_datetime(data['order_date']).dt.month
         months = month_dataframe['month'].unique()
+        #print('revenue_by_each_month')
+        #print(month_dataframe)
         for month in months:
             month_details = month_dataframe.query('month == @month')
+            #print(month_details)
+            #print(len(month_details))
+            #print("average: ", (month_details['product_price']*month_details['quantity']).sum()/len(month_details))
+            #print(prod_details['product_price']*prod_details['quantity'])
             revenue_by_each_month_output[months_dict[month]] = (month_details['product_price']*month_details['quantity']).sum()
     except Exception as e:
         print("Failled:", str(e))
@@ -24,8 +30,14 @@ def revenue_by_each_month(data):
 def revenue_by_each_product(data):
     try:
         products_dataframe = data['product_name'].unique()
+        #print('revenue_by_each_product')
+        #print(products_dataframe)
         for prod in products_dataframe:
             prod_details = data.query('product_name == @prod')
+            #print(prod_details)
+            #print(len(prod_details))
+            #print("average: ", (prod_details['product_price']*prod_details['quantity']).sum()/len(prod_details))
+            #print(prod_details['product_price']*prod_details['quantity'])
             revenue_by_each_product_output[prod] = (prod_details['product_price']*prod_details['quantity']).sum()
     except Exception as e:
         print("Failled:", str(e))
@@ -33,8 +45,13 @@ def revenue_by_each_product(data):
 def revenue_by_each_customer(data):
     try:
         customer_dataframe = data['customer_id'].unique()
+        #print('revenue_by_each_customer')
+        #print(customer_dataframe)
         for cust in customer_dataframe:
             cust_details = data.query('customer_id == @cust')
+            #print(cust_details)
+            #print(len(cust_details))
+            #print("average: ", (cust_details['product_price']*cust_details['quantity']).sum()/len(cust_details))
             revenue_by_each_customer_output[cust] = (cust_details['product_price']*cust_details['quantity']).sum()
     except Exception as e:
         print("Failled:", str(e))
@@ -46,14 +63,25 @@ def main():
     args = parser.parse_args()
     try:
         file_details = pandas.read_csv(args.filename)
+        
+        #print("customer Unique ID: ", file_details['customer_id'].unique())
+        
         lst = ['cus_1']
+        
+        #print(file_details.query('customer_id in @lst'))
+        
+        #print(file_details.query('customer_id == "cus_2"'))
         revenue_by_each_month(file_details)
         revenue_by_each_product(file_details)
         revenue_by_each_customer(file_details)
         print("revenue_by_each_month: ", revenue_by_each_month_output)
         print("revenue_by_each_product: ", revenue_by_each_product_output)
         print("revenue_by_each_customer: ", revenue_by_each_customer_output)
+        #list_cust = sorted(revenue_by_each_customer_output.items(), key=lambda x:x[1])
+        #print(type(list_cust))
+        #print(list_cust)
         sorted_customers_list = sorted(revenue_by_each_customer_output, key = revenue_by_each_customer_output.get, reverse=True)
+        #print(sorted_customers_list)
         top_customers = 10 
         print("Top 10 customers: ")
         if len(sorted_customers_list) < 10:
@@ -63,6 +91,7 @@ def main():
             print(revenue_by_each_customer_output[sorted_customers_list[i]], " : ", sorted_customers_list[i] )
         
             
+        #import pdb;pdb.set_trace()
     except Exception as e:
         print("Failled:", str(e))
 
